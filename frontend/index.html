@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Samarth Kale — Computer Engineer & AI/ML Developer</title>
+    <meta name="description" content="Personal portfolio of Samarth Kale — Computer Engineering student specialising in AI/ML, full-stack development, and technical workshop facilitation." />
+    <meta property="og:title" content="Samarth Kale — Portfolio" />
+    <meta property="og:description" content="Computer Engineer · AI/ML · Full-Stack · Workshop Facilitator" />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#0d0d0f" />
+    <script>
+      // Prevent flash of wrong theme
+      (function() {
+        const t = localStorage.getItem('portfolio-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (t === 'light' || (!t && !prefersDark)) {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-[#00e5ff] focus:text-[#0d0d0f] focus:rounded">
+      Skip to main content
+    </a>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

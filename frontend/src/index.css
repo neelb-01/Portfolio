@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base Reset & Theme ─────────────────────────────────────────── */
+@layer base {
+  :root {
+    --bg: #f5f5f7;
+    --bg-2: #ececee;
+    --bg-3: #e0e0e5;
+    --fg: #0d0d0f;
+    --fg-muted: #4a4a55;
+    --border: #d0d0da;
+    --node: #00b8cc;
+    --synapse: #6aaa00;
+  }
+
+  .dark {
+    --bg: #0d0d0f;
+    --bg-2: #131317;
+    --bg-3: #1a1a20;
+    --fg: #f5f5f7;
+    --fg-muted: #b0b0bb;
+    --border: #2e2e38;
+    --node: #00e5ff;
+    --synapse: #b8ff57;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply font-sans bg-[var(--bg)] text-[var(--fg)] transition-colors duration-300;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgba(0, 229, 255, 0.25);
+    color: inherit;
+  }
+
+  /* Focus rings */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-[var(--node)] ring-offset-2 ring-offset-[var(--bg)] rounded-sm;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--fg-muted);
+  }
+}
+
+/* ─── Component Utilities ────────────────────────────────────────── */
+@layer components {
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-12;
+  }
+
+  .section-padding {
+    @apply py-20 md:py-28 lg:py-36;
+  }
+
+  .glass {
+    @apply backdrop-blur-md bg-[var(--bg-3)] border border-[var(--border)];
+  }
+
+  .glass-hover {
+    @apply glass transition-all duration-300 hover:border-[var(--node)] hover:shadow-[0_0_20px_rgba(0,229,255,0.1)];
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-[var(--node)] to-[var(--synapse)] bg-clip-text text-transparent;
+  }
+
+  .tag-pill {
+    @apply font-mono text-xs px-2.5 py-1 rounded-full border border-[var(--border)] 
+           text-[var(--fg-muted)] bg-[var(--bg-2)] hover:border-[var(--node)] 
+           hover:text-[var(--node)] transition-colors duration-200;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium 
+           bg-[var(--node)] text-void hover:bg-[var(--node-dim)] 
+           transition-all duration-200 hover:scale-105 active:scale-95
+           focus-visible:ring-offset-[var(--bg)];
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium 
+           border border-[var(--border)] text-[var(--fg-muted)] 
+           hover:border-[var(--node)] hover:text-[var(--node)] 
+           transition-all duration-200;
+  }
+
+  .section-label {
+    @apply font-mono text-xs tracking-[0.25em] uppercase text-[var(--node)] mb-3;
+  }
+
+  .section-heading {
+    @apply font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-[var(--fg)];
+  }
+
+  .timeline-line {
+    @apply absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-[var(--node)] via-[var(--border)] to-transparent;
+  }
+}
+
+/* ─── Animations ─────────────────────────────────────────────────── */
+@layer utilities {
+  .animation-delay-200 { animation-delay: 200ms; }
+  .animation-delay-400 { animation-delay: 400ms; }
+  .animation-delay-600 { animation-delay: 600ms; }
+}
