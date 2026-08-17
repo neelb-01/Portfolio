@@ -1,2 +1,9 @@
 implementation_plan.md
 CLAUDE.md
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Local SQLite database (rebuilt from seed.py on startup)
+*.db
