@@ -90,7 +90,10 @@ function TimelineCard({
 export default function ExperienceSection() {
   const [experiences, setExperiences] = useState<Experience[]>([])
   const [loading, setLoading] = useState(true)
-  const ref = useRef<HTMLDivElement>(null)
+  // Attached to the <section>, which is always mounted. Attaching it to the
+  // timeline below would leave ref.current null on first render (loading), and
+  // useInView never re-runs its effect when only ref.current changes.
+  const ref = useRef<HTMLElement>(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
   useEffect(() => {
@@ -100,7 +103,7 @@ export default function ExperienceSection() {
   }, [])
 
   return (
-    <section id="experience" className="relative z-10 section-padding bg-[var(--bg-2)]/50">
+    <section ref={ref} id="experience" className="relative z-10 section-padding bg-[var(--bg-2)]/50">
       <div className="section-container">
         <SectionTitle
           label="// experience"
@@ -128,7 +131,6 @@ export default function ExperienceSection() {
             <div className="md:hidden absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-[var(--node)] via-[var(--border)] to-transparent" aria-hidden="true" />
 
             <motion.div
-              ref={ref}
               initial="hidden"
               animate={inView ? 'visible' : 'hidden'}
               variants={staggerContainer}

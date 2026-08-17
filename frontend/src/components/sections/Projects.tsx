@@ -82,7 +82,10 @@ export default function Projects() {
   const [error, setError] = useState<string | null>(null)
   const [selected, setSelected] = useState<Project | null>(null)
 
-  const ref = useRef<HTMLDivElement>(null)
+  // Attached to the <section>, which is always mounted. Attaching it to the
+  // grid below would leave ref.current null on first render (loading), and
+  // useInView never re-runs its effect when only ref.current changes.
+  const ref = useRef<HTMLElement>(null)
   const inView = useInView(ref, { once: true, margin: '-60px' })
 
   useEffect(() => {
@@ -93,7 +96,7 @@ export default function Projects() {
   }, [])
 
   return (
-    <section id="projects" className="relative z-10 section-padding bg-[var(--bg-2)]/50">
+    <section ref={ref} id="projects" className="relative z-10 section-padding bg-[var(--bg-2)]/50">
       <div className="section-container">
         <SectionTitle
           label="// projects"
@@ -113,7 +116,6 @@ export default function Projects() {
 
         {!loading && !error && (
           <motion.div
-            ref={ref}
             initial="hidden"
             animate={inView ? 'visible' : 'hidden'}
             variants={staggerContainer}
