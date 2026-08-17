@@ -14,7 +14,7 @@ export interface Project {
 export interface Skill {
   id: number
   name: string
-  category: 'ML_AI' | 'Backend' | 'Frontend' | 'Tools'
+  category: 'Languages' | 'Frontend' | 'Backend' | 'Tools'
   level: number
 }
 

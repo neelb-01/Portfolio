@@ -28,7 +28,7 @@ class ProjectResponse(ProjectBase):
 
 class SkillBase(BaseModel):
     name: str
-    category: str  # ML_AI | Backend | Frontend | Tools
+    category: str  # Languages | Frontend | Backend | Tools
     level: int = Field(ge=0, le=100)
 
 

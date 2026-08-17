@@ -6,9 +6,9 @@ import { staggerContainer, fadeSlideUp } from '@/lib/motion'
 import type { Skill } from '@/types'
 
 const CATEGORY_META: Record<string, { label: string; color: string }> = {
-  ML_AI: { label: 'ML / AI', color: 'var(--node)' },
-  Backend: { label: 'Backend', color: 'var(--synapse)' },
+  Languages: { label: 'Languages', color: 'var(--node)' },
   Frontend: { label: 'Frontend', color: '#f97316' },
+  Backend: { label: 'Backend', color: 'var(--synapse)' },
   Tools: { label: 'Tools', color: '#a78bfa' },
 }
 
@@ -82,7 +82,7 @@ export default function Skills() {
     return acc
   }, {})
 
-  const categories = ['ML_AI', 'Backend', 'Frontend', 'Tools']
+  const categories = ['Languages', 'Frontend', 'Backend', 'Tools']
 
   return (
     <section ref={sectionRef} id="skills" className="relative z-10 section-padding">
