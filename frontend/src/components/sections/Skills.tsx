@@ -90,6 +90,7 @@ export default function Skills() {
         <SectionTitle
           label="// skills"
           title="What I work with"
+          subtitle="The languages and tools behind the projects above — mostly JavaScript and TypeScript on the front, Node and Python on the back."
         />
 
         {loading && (

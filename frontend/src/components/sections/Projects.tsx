@@ -98,7 +98,7 @@ export default function Projects() {
         <SectionTitle
           label="// projects"
           title="Things I've built"
-          subtitle="A selection of projects across ML systems, full-stack apps, and everything in between."
+          subtitle="Everything here is on GitHub — sports analytics, healthcare logistics, chat automation, and this site."
         />
 
         {loading && (

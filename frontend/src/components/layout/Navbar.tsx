@@ -50,7 +50,7 @@ export default function Navbar({ isDark, onToggleTheme }: NavbarProps) {
             className="font-serif font-bold text-xl text-[var(--fg)] hover:text-[var(--node)] transition-colors"
             aria-label="Home"
           >
-            <span className="gradient-text">SK</span>
+            <span className="gradient-text">NB</span>
           </a>
 
           {/* Desktop nav */}

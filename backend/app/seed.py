@@ -1,171 +1,151 @@
-"""Seed placeholder data into the SQLite database."""
+"""Seed portfolio content into the SQLite database.
+
+Projects and skills mirror the public repositories on github.com/neelb-01.
+"""
 from .database import SessionLocal
 from .models import Project, Skill, Experience
 
 
+GITHUB = "https://github.com/neelb-01"
+
 PROJECTS = [
     {
-        "title": "NeuralSearch",
-        "description": "A semantic search engine over academic papers using FAISS and sentence-transformers.",
+        "title": "Football Analyzer",
+        "description": "Expected Goals (xG) analytics over 3,464 real matches — shot maps, xG race charts, and a fitted fallback model.",
         "long_description": (
-            "Built a full-stack semantic search tool that indexes 50k+ arXiv abstracts. "
-            "The pipeline embeds documents offline with all-MiniLM-L6-v2, stores vectors in FAISS, "
-            "and serves sub-50ms nearest-neighbour queries via a FastAPI backend. "
-            "A React UI lets users search, filter by category, and inspect embedding similarity scores."
+            "A full-stack football analytics app built on StatsBomb Open Data, covering 3,464 matches "
+            "and 88,023 shots. An Express 5 backend reads the event files directly — no database — and "
+            "serves match metadata, shot-level xG breakdowns, and player/team aggregation over a REST API. "
+            "Where StatsBomb publishes its own xG the value is used verbatim; every other shot falls back to "
+            "an L2-regularised logistic regression I fitted on the full dataset, with separate models per shot "
+            "class. Validated on 686 held-out matches: 0.2768 open-play test log-loss against StatsBomb's own "
+            "0.2756, calibrated to 1731.8 predicted xG vs 1752 actual goals. Penalty shootouts are excluded, "
+            "since counting them inflated the 2016 Champions League final from 5.12 to 12.17 xG. "
+            "The frontend is three hand-written files with no build step and no framework: a searchable "
+            "combobox over every match, a dual scoreline, a cumulative xG race chart, a shot map scaled by xG, "
+            "and a chronological shot log — with a floodlight palette chosen to stay readable under every "
+            "common colour-vision deficiency."
         ),
-        "tech_stack": ["Python", "FAISS", "FastAPI", "React", "sentence-transformers", "SQLite"],
-        "github_url": "https://github.com/yourusername/neuralsearch",
+        "tech_stack": ["JavaScript", "Node.js", "Express 5", "HTML / CSS", "Logistic Regression", "StatsBomb Open Data"],
+        "github_url": f"{GITHUB}/football-analyzer",
         "demo_url": None,
         "featured": 1,
     },
     {
-        "title": "WorkshopOS",
-        "description": "A platform for managing and scheduling technical workshops with live attendance tracking.",
+        "title": "LifeLine — QR Blood Management",
+        "description": "A QR-traced blood donation platform: every unit is followed from the donor's arm to the patient's vein.",
         "long_description": (
-            "Designed and launched a workshop management system used by 200+ students at university. "
-            "Features include real-time seat booking, QR-code check-in, facilitator dashboards, "
-            "and post-session feedback analytics. Built with Next.js, Supabase, and Recharts."
+            "A multi-stakeholder platform that digitises the blood donation lifecycle across five roles — "
+            "donor, camp, blood bank, hospital, and admin — each with its own dashboard. Every unit is stamped "
+            "with an HMAC-signed QR code at collection and scanned at each checkpoint, appending to an "
+            "immutable trace: collected → tested → available → reserved → used. Units only reach the hospital "
+            "marketplace after all five NBTC-mandated screening tests pass; any failure auto-discards them. "
+            "Built on React 19 and an Express 5 API over PostgreSQL, with JWT access/refresh tokens in httpOnly "
+            "cookies, role-based route guards, fully parameterised queries, and an append-only audit log capturing "
+            "user, IP, and user agent for every sensitive action. Built as a four-person team project — "
+            "I worked as a full-stack developer across the React dashboards and the Express/PostgreSQL API."
         ),
-        "tech_stack": ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Recharts"],
-        "github_url": "https://github.com/yourusername/workshopos",
-        "demo_url": "https://workshopos.demo.dev",
+        "tech_stack": ["React 19", "Node.js", "Express 5", "PostgreSQL", "JWT Auth", "Leaflet", "Chart.js", "Stripe"],
+        "github_url": f"{GITHUB}/QR-Based-Transparent-Blood-Management-System",
+        "demo_url": "https://qr-based-transparent-blood-manageme.vercel.app",
         "featured": 1,
     },
     {
-        "title": "EdgeClassifier",
-        "description": "On-device image classification with TFLite and a custom MobileNetV3 fine-tune.",
+        "title": "Portfolio",
+        "description": "This site — a React + TypeScript frontend backed by a FastAPI service instead of hardcoded content.",
         "long_description": (
-            "Fine-tuned MobileNetV3-Small on a custom 12-class dataset for a campus recycling project. "
-            "Converted to TensorFlow Lite with int8 quantization, achieving 92% accuracy at 30ms/frame "
-            "on a Raspberry Pi 4. Deployed behind a Flask API for integration with IoT sensors."
+            "The site you're reading. Rather than hardcoding content into components, projects, skills, and "
+            "experience are served by a FastAPI backend over SQLAlchemy and SQLite, so each section fetches and "
+            "renders its own data with proper loading and error states. The frontend is React 19 with TypeScript, "
+            "built by Vite and styled with Tailwind, with Framer Motion driving scroll-triggered reveals and an "
+            "animated neural-network canvas behind the page. The contact form posts to a validated Pydantic "
+            "endpoint that surfaces field-level errors back into the form. Dark and light themes are resolved "
+            "before first paint to avoid a flash of the wrong theme."
         ),
-        "tech_stack": ["Python", "TensorFlow", "TFLite", "Flask", "Raspberry Pi", "OpenCV"],
-        "github_url": "https://github.com/yourusername/edgeclassifier",
+        "tech_stack": ["TypeScript", "React 19", "Vite", "Tailwind CSS", "Framer Motion", "Python", "FastAPI", "SQLAlchemy"],
+        "github_url": f"{GITHUB}/Portfolio",
         "demo_url": None,
-        "featured": 0,
+        "featured": 1,
     },
     {
-        "title": "DataLens",
-        "description": "Interactive data-exploration dashboard with auto-generated charts from CSV uploads.",
+        "title": "Discord Bot",
+        "description": "A discord.js v14 slash-command bot with filesystem-driven command loading and hot reload.",
         "long_description": (
-            "Drag-and-drop CSV upload triggers automatic EDA: distribution plots, correlation heatmaps, "
-            "and outlier flagging. Built with a FastAPI data layer, Pandas for transformations, "
-            "and a Vite+React frontend with Plotly for interactive charts."
+            "A slash-command Discord bot built on discord.js v14. Commands are discovered by scanning "
+            "commands/<category>/*.js and events by scanning events/, so adding either is a matter of dropping "
+            "in a file — the same shared loader backs both the running bot and the command deployment script. "
+            "Each command declares its own per-user cooldown, and /reload hot-swaps a command into the running "
+            "process without a restart, gated behind an Administrator check."
         ),
-        "tech_stack": ["Python", "Pandas", "FastAPI", "React", "Plotly", "Vite"],
-        "github_url": "https://github.com/yourusername/datalens",
+        "tech_stack": ["JavaScript", "Node.js", "discord.js v14", "ESLint"],
+        "github_url": f"{GITHUB}/discord-bot",
         "demo_url": None,
         "featured": 0,
     },
 ]
 
 SKILLS = [
-    # ML / AI
-    {"name": "PyTorch", "category": "ML_AI", "level": 88},
-    {"name": "TensorFlow / TFLite", "category": "ML_AI", "level": 82},
-    {"name": "scikit-learn", "category": "ML_AI", "level": 90},
-    {"name": "Hugging Face", "category": "ML_AI", "level": 80},
-    {"name": "FAISS / Vector DBs", "category": "ML_AI", "level": 75},
-    {"name": "LangChain", "category": "ML_AI", "level": 70},
-    # Backend
-    {"name": "FastAPI", "category": "Backend", "level": 92},
-    {"name": "Python", "category": "Backend", "level": 95},
-    {"name": "Node.js", "category": "Backend", "level": 78},
-    {"name": "PostgreSQL", "category": "Backend", "level": 80},
-    {"name": "SQLite / SQLAlchemy", "category": "Backend", "level": 85},
-    {"name": "REST API Design", "category": "Backend", "level": 88},
+    # Languages
+    {"name": "JavaScript", "category": "Languages", "level": 90},
+    {"name": "TypeScript", "category": "Languages", "level": 82},
+    {"name": "Python", "category": "Languages", "level": 80},
+    {"name": "HTML / CSS", "category": "Languages", "level": 88},
+    {"name": "SQL", "category": "Languages", "level": 75},
     # Frontend
-    {"name": "React / Next.js", "category": "Frontend", "level": 87},
-    {"name": "TypeScript", "category": "Frontend", "level": 85},
-    {"name": "Tailwind CSS", "category": "Frontend", "level": 90},
-    {"name": "Framer Motion", "category": "Frontend", "level": 75},
-    {"name": "Vite", "category": "Frontend", "level": 82},
+    {"name": "React", "category": "Frontend", "level": 88},
+    {"name": "Vanilla JS / DOM", "category": "Frontend", "level": 86},
+    {"name": "Tailwind CSS", "category": "Frontend", "level": 82},
+    {"name": "Framer Motion", "category": "Frontend", "level": 76},
+    {"name": "Canvas / SVG Charts", "category": "Frontend", "level": 78},
+    {"name": "Vite", "category": "Frontend", "level": 80},
+    # Backend
+    {"name": "Node.js", "category": "Backend", "level": 88},
+    {"name": "Express", "category": "Backend", "level": 85},
+    {"name": "FastAPI", "category": "Backend", "level": 78},
+    {"name": "REST API Design", "category": "Backend", "level": 85},
+    {"name": "PostgreSQL", "category": "Backend", "level": 76},
+    {"name": "SQLite / SQLAlchemy", "category": "Backend", "level": 75},
+    {"name": "JWT / Auth Flows", "category": "Backend", "level": 76},
     # Tools
-    {"name": "Git / GitHub", "category": "Tools", "level": 93},
-    {"name": "Docker", "category": "Tools", "level": 75},
-    {"name": "Linux / Bash", "category": "Tools", "level": 85},
-    {"name": "Jupyter", "category": "Tools", "level": 88},
-    {"name": "VS Code", "category": "Tools", "level": 95},
+    {"name": "Git / GitHub", "category": "Tools", "level": 90},
+    {"name": "npm / Node tooling", "category": "Tools", "level": 85},
+    {"name": "Data Wrangling (JSON/TSV)", "category": "Tools", "level": 82},
+    {"name": "ESLint / oxlint", "category": "Tools", "level": 78},
+    {"name": "Vercel", "category": "Tools", "level": 72},
+    {"name": "VS Code", "category": "Tools", "level": 92},
 ]
 
 EXPERIENCE = [
     {
-        "title": "AI/ML Workshop Facilitator",
-        "organization": "University Tech Society",
-        "type": "workshop",
-        "start_date": "Sep 2023",
-        "end_date": "Present",
+        "title": "Full-Stack Developer — LifeLine",
+        "organization": "QR-Based Transparent Blood Management System (team project)",
+        "type": "project",
+        "start_date": "Aug 2025",
+        "end_date": "May 2026",
         "description": (
-            "Designed and led 10+ hands-on workshops (50–120 attendees each) covering PyTorch basics, "
-            "transformer fine-tuning, and MLOps practices. Created all curriculum, slides, and Colab notebooks."
+            "Worked as one of four developers on LifeLine, a QR-traced blood donation platform. "
+            "Contributed across the React 19 role dashboards and the Express 5 / PostgreSQL API — "
+            "QR lifecycle tracking, the five-test screening flow, and the hospital marketplace. "
+            "Deployed on Vercel."
         ),
-        "location": "Pune, India",
-    },
-    {
-        "title": "ML Research Intern",
-        "organization": "Centre for Development of Advanced Computing (C-DAC)",
-        "type": "research",
-        "start_date": "May 2024",
-        "end_date": "Aug 2024",
-        "description": (
-            "Researched document understanding using LayoutLMv3. Implemented a fine-tuning pipeline for "
-            "token classification on scanned government forms, achieving 94.2% F1. "
-            "Wrote a technical report summarising findings for the NLP team."
-        ),
-        "location": "Pune, India",
-    },
-    {
-        "title": "Winner — Best ML Hack",
-        "organization": "HackIIIT 2024",
-        "type": "hackathon",
-        "start_date": "Mar 2024",
-        "end_date": None,
-        "description": (
-            "Built a real-time sign-language interpreter using MediaPipe + a lightweight LSTM model "
-            "in under 24 hours. Placed 1st in the AI/ML track out of 180 teams."
-        ),
-        "location": "Hyderabad, India",
-    },
-    {
-        "title": "Finalist — Smart India Hackathon",
-        "organization": "Ministry of Education, India",
-        "type": "hackathon",
-        "start_date": "Dec 2023",
-        "end_date": None,
-        "description": (
-            "Led a 6-member team to develop an AI-powered crop-disease detection app using "
-            "transfer learning and a React Native frontend. Reached national finals."
-        ),
-        "location": "Remote",
-    },
-    {
-        "title": "Full-Stack Developer (Project)",
-        "organization": "College Capstone — Computer Engineering",
-        "type": "research",
-        "start_date": "Jan 2025",
-        "end_date": "Apr 2025",
-        "description": (
-            "Built WorkshopOS as a capstone project — full-stack workshop management platform "
-            "adopted by 3 student societies. Mentored two juniors on React and database design."
-        ),
-        "location": "Pune, India",
+        "location": "Mumbai, India",
     },
 ]
+
+
+def _sync(db, model, rows):
+    """Replace the table's contents with `rows`. Seed data is the source of truth."""
+    db.query(model).delete()
+    db.add_all([model(**r) for r in rows])
 
 
 def seed():
     db = SessionLocal()
     try:
-        if db.query(Project).count() == 0:
-            db.add_all([Project(**p) for p in PROJECTS])
-
-        if db.query(Skill).count() == 0:
-            db.add_all([Skill(**s) for s in SKILLS])
-
-        if db.query(Experience).count() == 0:
-            db.add_all([Experience(**e) for e in EXPERIENCE])
-
+        _sync(db, Project, PROJECTS)
+        _sync(db, Skill, SKILLS)
+        _sync(db, Experience, EXPERIENCE)
         db.commit()
-        print("[OK] Database seeded with placeholder data")
+        print("[OK] Database seeded with portfolio content")
     finally:
         db.close()

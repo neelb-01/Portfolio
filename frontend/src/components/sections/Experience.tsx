@@ -100,7 +100,7 @@ export default function ExperienceSection() {
         <SectionTitle
           label="// experience"
           title="Timeline"
-          subtitle="Hackathons, research, and workshops — where I've applied and grown."
+          subtitle="Where I've built software alongside other people."
         />
 
         {loading && (
@@ -109,7 +109,13 @@ export default function ExperienceSection() {
           </div>
         )}
 
-        {!loading && (
+        {!loading && experiences.length === 0 && (
+          <p className="text-center font-mono text-sm text-[var(--fg-muted)] py-12">
+            Nothing here yet — more on the way.
+          </p>
+        )}
+
+        {!loading && experiences.length > 0 && (
           <div className="relative">
             {/* Vertical line */}
             <div className="hidden md:block absolute left-1/2 -translate-x-px top-0 bottom-0 w-px bg-gradient-to-b from-[var(--node)] via-[var(--border)] to-transparent" aria-hidden="true" />

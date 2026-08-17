@@ -2,23 +2,23 @@ import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { fadeSlideUp, fadeSlideLeft, staggerContainer } from '@/lib/motion'
-import { Brain, Code2, Users } from 'lucide-react'
+import { LineChart, Code2, Wrench } from 'lucide-react'
 
 const HIGHLIGHTS = [
   {
-    icon: <Brain size={22} />,
-    title: 'AI / ML',
-    desc: 'Building intelligent systems — from fine-tuning transformers to deploying models on the edge.',
-  },
-  {
     icon: <Code2 size={22} />,
     title: 'Full-Stack Dev',
-    desc: 'End-to-end engineering: FastAPI backends, React frontends, and everything in between.',
+    desc: 'End-to-end builds in JavaScript, TypeScript, and Python — Express and FastAPI services behind React and vanilla-JS frontends.',
   },
   {
-    icon: <Users size={22} />,
-    title: 'Workshop Facilitator',
-    desc: 'Designed and led 10+ technical workshops for 50–120 students each, on ML and software engineering.',
+    icon: <LineChart size={22} />,
+    title: 'Data-Driven Projects',
+    desc: 'Working with real datasets: an xG model fitted on 88,023 shots, validated against 686 held-out matches.',
+  },
+  {
+    icon: <Wrench size={22} />,
+    title: 'Useful Tools',
+    desc: 'Practical software that solves an actual problem — match analytics, traceable blood-unit logistics, chat automation.',
   },
 ]
 
@@ -39,23 +39,25 @@ export default function About() {
           >
             <p className="section-label">About Me</p>
             <h2 className="section-heading mb-6">
-              Building at the intersection of{' '}
-              <span className="gradient-text italic">intelligence</span> and craft.
+              Turning real <span className="gradient-text italic">data</span> into tools people
+              can use.
             </h2>
             <div className="space-y-4 text-[var(--fg-muted)] leading-relaxed text-lg">
               <p>
-                I'm a Computer Engineering student passionate about making machines smarter and
-                software more human. My work spans research-level ML (transformer fine-tuning, vector
-                search, on-device inference) and production full-stack systems.
+                I'm a student who enjoys building useful tools and exploring data-driven projects.
+                I focus on practical things that solve real problems — an xG engine over 3,464
+                football matches, a QR-traced blood donation platform, a Discord bot that hot-reloads
+                its own commands.
               </p>
               <p>
-                Beyond building, I teach — I've designed curriculum and facilitated workshops that
-                have introduced hundreds of students to PyTorch, LLMs, and modern web development.
-                Teaching sharpens my own understanding as much as it helps others.
+                My primary toolkit is JavaScript and TypeScript, with Python close behind. That means
+                React and plain HTML/CSS/JS on the frontend, Node with Express or Python with FastAPI
+                on the backend, and PostgreSQL or SQLite underneath. I like working close to the data
+                — fitting a model, validating it honestly, then drawing the result on screen.
               </p>
               <p>
-                I'm looking for opportunities where I can contribute meaningfully to AI/ML products,
-                ship reliable software, and keep learning from great engineers.
+                I'm looking for opportunities to ship reliable software, work on problems that matter,
+                and grow alongside stronger engineers.
               </p>
             </div>
           </motion.div>
