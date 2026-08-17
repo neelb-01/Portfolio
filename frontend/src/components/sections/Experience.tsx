@@ -90,8 +90,8 @@ function TimelineCard({
 export default function ExperienceSection() {
   const [experiences, setExperiences] = useState<Experience[]>([])
   const [loading, setLoading] = useState(true)
-  const ref = useRef(null)
-  const inView = useInView(ref as React.RefObject<Element>, { once: true, margin: '-60px' })
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, margin: '-60px' })
 
   useEffect(() => {
     fetchExperience()

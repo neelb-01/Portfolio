@@ -23,8 +23,8 @@ const HIGHLIGHTS = [
 ]
 
 export default function About() {
-  const ref = useRef(null)
-  const inView = useInView(ref as React.RefObject<Element>, { once: true, margin: '-80px' })
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
     <section id="about" className="relative z-10 section-padding">

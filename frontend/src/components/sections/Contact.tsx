@@ -17,8 +17,8 @@ export default function Contact() {
   const [errorMsg, setErrorMsg] = useState('')
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
 
-  const ref = useRef(null)
-  const inView = useInView(ref as React.RefObject<Element>, { once: true, margin: '-60px' })
+  const ref = useRef<HTMLFormElement>(null)
+  const inView = useInView(ref, { once: true, margin: '-60px' })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
