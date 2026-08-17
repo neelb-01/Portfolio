@@ -1,3 +1,4 @@
+import logging
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request
@@ -7,6 +8,8 @@ from fastapi.responses import JSONResponse
 from .database import Base, engine
 from .routers import projects, skills, experience, contact
 from .seed import seed
+
+logger = logging.getLogger(__name__)
 
 
 @asynccontextmanager
@@ -52,6 +55,9 @@ def root():
 # ─── Global error handler (avoid raw 500 tracebacks) ────────────────────────
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
+    # Registering a handler for bare Exception stops Starlette re-raising, so
+    # nothing else will ever log this. Record the traceback before responding.
+    logger.exception("Unhandled error on %s %s", request.method, request.url.path)
     return JSONResponse(
         status_code=500,
         content={"detail": "An unexpected error occurred. Please try again later."},

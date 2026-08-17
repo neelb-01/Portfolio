@@ -1,3 +1,4 @@
+import logging
 import os
 import smtplib
 from email.mime.text import MIMEText
@@ -9,6 +10,8 @@ from sqlalchemy.orm import Session
 from ..database import get_db
 from ..models import ContactMessage
 from ..schemas import ContactRequest, ContactResponse
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api/contact", tags=["contact"])
 
@@ -44,8 +47,9 @@ def _send_email(data: ContactRequest) -> None:
             server.login(user, password)
             server.sendmail(from_addr, to_addr, msg.as_string())
     except Exception:
-        # Log but don't fail the request — message is already saved to DB
-        pass
+        # Don't fail the request — the message is already saved to the DB — but
+        # a silent skip here would hide a permanently broken SMTP config.
+        logger.exception("Failed to send contact notification email to %s", to_addr)
 
 
 @router.post("/", response_model=ContactResponse, status_code=status.HTTP_201_CREATED)
