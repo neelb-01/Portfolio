@@ -14,6 +14,13 @@ const MAX_DIST = 160
 const MOUSE_REPEL_DIST = 120
 const MOUSE_REPEL_STRENGTH = 0.35
 const DRIFT_SPEED = 0.3
+// One nominal 60fps frame, used for the very first tick when there is no
+// previous timestamp to diff against.
+const FRAME_MS = 1000 / 60
+// rAF is paused in background tabs, so the first frame after the tab regains
+// focus reports the entire away-duration. Cap the step so nodes advance by at
+// most ~2 frames instead of teleporting across the canvas.
+const MAX_FRAME_MS = 32
 
 function makeNodes(w: number, h: number): Node[] {
   return Array.from({ length: NODE_COUNT }, () => ({
@@ -71,7 +78,12 @@ export default function NeuralCanvas({ isDark }: Props) {
 
     function draw(timestamp: number) {
       if (!canvas || !ctx) return
-      const dt = timestamp - timeRef.current
+      // timeRef is 0 only before the first frame; rAF timestamps are measured
+      // from page load, so diffing against 0 would yield the whole page age.
+      const dt =
+        timeRef.current === 0
+          ? FRAME_MS
+          : Math.min(timestamp - timeRef.current, MAX_FRAME_MS)
       timeRef.current = timestamp
 
       ctx.clearRect(0, 0, canvas.width, canvas.height)
