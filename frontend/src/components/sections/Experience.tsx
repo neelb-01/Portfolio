@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { Trophy, FlaskConical, Presentation, MapPin, Calendar } from 'lucide-react'
+import { Trophy, FlaskConical, Presentation, Hammer, MapPin, Calendar } from 'lucide-react'
 import SectionTitle from '@/components/ui/SectionTitle'
 import { fetchExperience } from '@/lib/api'
 import { staggerContainer, fadeSlideUp } from '@/lib/motion'
@@ -21,6 +21,11 @@ const TYPE_META: Record<string, { icon: React.ReactNode; label: string; color: s
     icon: <Presentation size={14} />,
     label: 'Workshop',
     color: 'text-orange-400 border-orange-400/40 bg-orange-400/10',
+  },
+  project: {
+    icon: <Hammer size={14} />,
+    label: 'Team Project',
+    color: 'text-violet-400 border-violet-400/40 bg-violet-400/10',
   },
 }
 
