@@ -14,6 +14,7 @@
     --fg-muted: #4a4a55;
     --border: #d0d0da;
     --node: #00b8cc;
+    --node-dim: #0097a8;
     --synapse: #6aaa00;
   }
 
@@ -25,6 +26,7 @@
     --fg-muted: #b0b0bb;
     --border: #2e2e38;
     --node: #00e5ff;
+    --node-dim: #00c4db;
     --synapse: #b8ff57;
   }
 
