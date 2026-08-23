@@ -10,7 +10,7 @@ GITHUB = "https://github.com/neelb-01"
 
 PROJECTS = [
     {
-        "title": "Football Analyzer",
+        "title": "Floodlit xG",
         "description": "Expected Goals (xG) analytics over 3,464 real matches — shot maps, xG race charts, and a fitted fallback model.",
         "long_description": (
             "A full-stack football analytics app built on StatsBomb Open Data, covering 3,464 matches "
@@ -28,7 +28,7 @@ PROJECTS = [
         ),
         "tech_stack": ["JavaScript", "Node.js", "Express 5", "HTML / CSS", "Logistic Regression", "StatsBomb Open Data"],
         "github_url": f"{GITHUB}/football-analyzer",
-        "demo_url": None,
+        "demo_url": "https://floodlit-xg.vercel.app",
         "featured": 1,
     },
     {
@@ -48,6 +48,27 @@ PROJECTS = [
         "tech_stack": ["React 19", "Node.js", "Express 5", "PostgreSQL", "JWT Auth", "Leaflet", "Chart.js", "Stripe"],
         "github_url": f"{GITHUB}/QR-Based-Transparent-Blood-Management-System",
         "demo_url": "https://qr-based-transparent-blood-manageme.vercel.app",
+        "featured": 1,
+    },
+    {
+        "title": "ADL Cafe — Android Ordering App",
+        "description": "A native Kotlin cafe app: browse the menu, configure a drink, check out, and keep a receipt history that survives restarts.",
+        "long_description": (
+            "A native Android cafe ordering app covering the full flow across six screens — menu with "
+            "search and category filters, item detail with a size selector and live total, cart, checkout, "
+            "order confirmation, and order history. State lives in a Room database with four entities, so "
+            "the cart and past orders survive an app restart. Each screen is a Fragment with its own "
+            "ViewModel observing StateFlow, and the UI only ever talks to a single repository; "
+            "dependencies are wired by hand through a ViewModel factory rather than a DI framework, "
+            "which the project is too small to justify. Money is stored as integer cents everywhere and "
+            "formatted only for display, so no price is ever the result of floating-point arithmetic, and "
+            "order lines snapshot the item name and unit price at purchase time — editing the menu later "
+            "cannot rewrite an old receipt. The cart enforces de-duplication with a unique index on "
+            "item plus size, and enums persist by name so reordering one cannot corrupt saved rows."
+        ),
+        "tech_stack": ["Kotlin", "Android SDK", "Room", "Coroutines / Flow", "Navigation Component", "Material 3", "ViewBinding", "Gradle"],
+        "github_url": f"{GITHUB}/cafe-app",
+        "demo_url": None,
         "featured": 1,
     },
     {
@@ -89,6 +110,7 @@ SKILLS = [
     {"name": "JavaScript", "category": "Languages", "level": 90},
     {"name": "TypeScript", "category": "Languages", "level": 82},
     {"name": "Python", "category": "Languages", "level": 80},
+    {"name": "Kotlin", "category": "Languages", "level": 72},
     {"name": "HTML / CSS", "category": "Languages", "level": 88},
     {"name": "SQL", "category": "Languages", "level": 75},
     # Frontend
@@ -98,6 +120,7 @@ SKILLS = [
     {"name": "Framer Motion", "category": "Frontend", "level": 76},
     {"name": "Canvas / SVG Charts", "category": "Frontend", "level": 78},
     {"name": "Vite", "category": "Frontend", "level": 80},
+    {"name": "Android UI (XML / Material 3)", "category": "Frontend", "level": 70},
     # Backend
     {"name": "Node.js", "category": "Backend", "level": 88},
     {"name": "Express", "category": "Backend", "level": 85},
@@ -106,12 +129,14 @@ SKILLS = [
     {"name": "PostgreSQL", "category": "Backend", "level": 76},
     {"name": "SQLite / SQLAlchemy", "category": "Backend", "level": 75},
     {"name": "JWT / Auth Flows", "category": "Backend", "level": 76},
+    {"name": "Room / Coroutines & Flow", "category": "Backend", "level": 70},
     # Tools
     {"name": "Git / GitHub", "category": "Tools", "level": 90},
     {"name": "npm / Node tooling", "category": "Tools", "level": 85},
     {"name": "Data Wrangling (JSON/TSV)", "category": "Tools", "level": 82},
     {"name": "ESLint / oxlint", "category": "Tools", "level": 78},
     {"name": "Vercel", "category": "Tools", "level": 72},
+    {"name": "Android Studio / Gradle", "category": "Tools", "level": 68},
     {"name": "VS Code", "category": "Tools", "level": 92},
 ]
 

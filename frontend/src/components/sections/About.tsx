@@ -18,7 +18,7 @@ const HIGHLIGHTS = [
   {
     icon: <Wrench size={22} />,
     title: 'Useful Tools',
-    desc: 'Practical software that solves an actual problem — match analytics, traceable blood-unit logistics, chat automation.',
+    desc: 'Practical software that solves an actual problem — match analytics, traceable blood-unit logistics, mobile ordering, chat automation.',
   },
 ]
 
@@ -46,13 +46,14 @@ export default function About() {
               <p>
                 I'm a student who enjoys building useful tools and exploring data-driven projects.
                 I focus on practical things that solve real problems — an xG engine over 3,464
-                football matches, a QR-traced blood donation platform, a Discord bot that hot-reloads
-                its own commands.
+                football matches, a QR-traced blood donation platform, a native Android cafe app, a
+                Discord bot that hot-reloads its own commands.
               </p>
               <p>
                 My primary toolkit is JavaScript and TypeScript, with Python close behind. That means
                 React and plain HTML/CSS/JS on the frontend, Node with Express or Python with FastAPI
-                on the backend, and PostgreSQL or SQLite underneath. I like working close to the data
+                on the backend, and PostgreSQL or SQLite underneath. More recently I've been building
+                natively for Android in Kotlin, with Room for persistence. I like working close to the data
                 — fitting a model, validating it honestly, then drawing the result on screen.
               </p>
               <p>
