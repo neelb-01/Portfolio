@@ -1,0 +1,4 @@
+backend/venv/
+backend/portfolio.db
+**/__pycache__/
+implementation_plan.md

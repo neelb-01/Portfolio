@@ -2,6 +2,8 @@
 
 Projects and skills mirror the public repositories on github.com/neelb-01.
 """
+from sqlalchemy import text
+
 from .database import SessionLocal
 from .models import Project, Skill, Experience
 
@@ -164,9 +166,20 @@ def _sync(db, model, rows):
     db.add_all([model(**r) for r in rows])
 
 
+# Arbitrary constant identifying this app's seed critical section.
+_SEED_LOCK_KEY = 8410572319
+
+
 def seed():
     db = SessionLocal()
     try:
+        if db.bind.dialect.name == "postgresql":
+            # Serverless cold starts can overlap. _sync deletes then re-inserts,
+            # so two concurrent seeders would each delete the other's view of the
+            # rows and both insert, leaving duplicates. A transaction-scoped
+            # advisory lock serialises them; it releases on commit.
+            db.execute(text("SELECT pg_advisory_xact_lock(:k)"), {"k": _SEED_LOCK_KEY})
+
         _sync(db, Project, PROJECTS)
         _sync(db, Skill, SKILLS)
         _sync(db, Experience, EXPERIENCE)
