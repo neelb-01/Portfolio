@@ -11,4 +11,5 @@ __pycache__/
 .claude/
 
 # Local env files
+.env
 .env.local
