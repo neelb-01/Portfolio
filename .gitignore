@@ -9,3 +9,6 @@ __pycache__/
 *.db
 
 .claude/
+
+# Local env files
+.env.local
