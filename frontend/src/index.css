@@ -32,6 +32,10 @@
 
   html {
     scroll-behavior: smooth;
+    /* Always reserve the scrollbar gutter. The modal locks body scroll, and
+       without this the vanishing scrollbar widens the viewport and nudges the
+       fixed navbar sideways. */
+    scrollbar-gutter: stable;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }

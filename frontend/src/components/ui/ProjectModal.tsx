@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { X, GitBranch, ExternalLink } from 'lucide-react'
 import type { Project } from '@/types'
@@ -10,8 +11,37 @@ interface Props {
 }
 
 export default function ProjectModal({ project, onClose }: Props) {
-  if (!project) return null
+  // The parent passes a fresh arrow each render, so keep it in a ref and key the
+  // effect on `project` alone — otherwise every re-render would re-lock scroll.
+  const onCloseRef = useRef(onClose)
+  onCloseRef.current = onClose
 
+  useEffect(() => {
+    if (!project) return
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onCloseRef.current()
+    }
+    document.addEventListener('keydown', onKeyDown)
+
+    // Lock background scroll while the dialog is up. `scrollbar-gutter: stable`
+    // on html keeps the gutter reserved, so nothing shifts and no width
+    // compensation is needed here.
+    const { body } = document
+    const prevOverflow = body.style.overflow
+    body.style.overflow = 'hidden'
+
+    return () => {
+      document.removeEventListener('keydown', onKeyDown)
+      body.style.overflow = prevOverflow
+    }
+  }, [project])
+
+  // No early `return null` when project is absent: that would unmount
+  // AnimatePresence itself and take the exiting children with it, so the
+  // exit variants below would never play. AnimatePresence renders nothing
+  // when the guard is false, and holds the previous children while they
+  // animate out.
   return (
     <AnimatePresence>
       {project && (
@@ -28,7 +58,9 @@ export default function ProjectModal({ project, onClose }: Props) {
             aria-hidden="true"
           />
 
-          {/* Modal */}
+          {/* Modal — centred with auto margins rather than -translate-x/y-1/2:
+              framer-motion writes an inline transform on this element, which
+              would overwrite a translate-based centring hack. */}
           <motion.div
             key="modal"
             role="dialog"
@@ -38,8 +70,7 @@ export default function ProjectModal({ project, onClose }: Props) {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="fixed z-50 inset-4 md:inset-auto md:top-1/2 md:left-1/2 
-                       md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-2xl 
+            className="fixed z-50 inset-0 m-auto h-fit w-[calc(100%-2rem)] max-w-2xl 
                        glass rounded-2xl p-6 md:p-8 overflow-y-auto max-h-[90vh]"
           >
             <button
