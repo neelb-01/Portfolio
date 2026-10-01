@@ -12,6 +12,53 @@ GITHUB = "https://github.com/neelb-01"
 
 PROJECTS = [
     {
+        "title": "SentinelTrap",
+        "description": "A web honeypot with a real-time detection pipeline — decoy traffic is grouped into sessions, scored, and raised as alerts a human can triage live.",
+        "long_description": (
+            "Most honeypot projects stop at collecting logs; SentinelTrap is about what happens next. Three "
+            "decoys — Cowrie for SSH/Telnet, a FastAPI web decoy I wrote with fake logins, injectable-looking "
+            "endpoints and a tarpit, and a scaffolded Dionaea — write JSONL that is tailed into Redis Streams "
+            "and consumed with consumer groups, so an analyser crash resumes from its last acknowledged ID "
+            "instead of dropping events. A sessioniser groups events by source and decoy, extracts ~24 "
+            "features per session, and a YAML rule engine scores them into alerts stored in a TimescaleDB "
+            "hypertable. A FastAPI REST + WebSocket API streams events to a Next.js dashboard, where an analyst "
+            "confirms or dismisses each alert — verdicts are stored as human labels, kept separate from "
+            "rule-derived ones so the planned LightGBM classifier can't just relearn its own regexes. "
+            "A traffic generator drives recon, brute-force, web-exploit, malware-dropper and benign campaigns "
+            "from many synthetic sources. Containment is part of the design: decoys run read-only and "
+            "unprivileged on an isolated Docker network with egress dropped, sharing nothing with the "
+            "platform but a read-only log volume. Anomaly detection and the classifier are next."
+        ),
+        "tech_stack": ["Python", "FastAPI", "WebSockets", "Redis Streams", "PostgreSQL / TimescaleDB", "Next.js", "TypeScript", "Docker Compose"],
+        "github_url": f"{GITHUB}/Sentinel-Trap",
+        "demo_url": None,
+        "featured": 1,
+    },
+    {
+        "title": "ScrapLink",
+        "description": "A B2B marketplace for industrial scrap that verifies, values and settles each trade — sealed-bid auctions, escrow, and a tamper-evident certificate.",
+        "long_description": (
+            "Existing waste marketplaces are listing boards: a trade starts on the platform and finishes off "
+            "it. ScrapLink adds the layer they stop short of. In the first slice, one metal-scrap trade runs "
+            "end to end in a phone-first web client — photo, confidence-gated metal suggestion, seller "
+            "confirmation, rules-based price range, sealed-bid auction, escrow, pickup, weighbridge reading, "
+            "settlement on the measured weight, and a SHA-256 hash-chained certificate anyone can verify. "
+            "A winning buyer has 24 hours to fund escrow; otherwise the lot passes to the next-highest bid at "
+            "that bidder's own price, and a late payment lands in the payer's wallet, never someone else's "
+            "trade. The metal suggestion comes from a separate zero-shot CLIP service that is deliberately "
+            "human-verified: below its confidence threshold the seller picks by hand, and every confirmed lot "
+            "is stored as labelled data for a future fine-tuned model. The backend is FastAPI over "
+            "SQLAlchemy 2 and Alembic with a ledger-first escrow, GSTIN-validated KYC and admin approvals; "
+            "the React + TypeScript client uses API types generated from the OpenAPI schema, and a Playwright "
+            "test drives a full three-party trade in the browser. Scope comes from a review of twenty research "
+            "papers, where dynamic pricing and in-platform escrow were missing from every system compared."
+        ),
+        "tech_stack": ["Python", "FastAPI", "SQLAlchemy", "Alembic", "PostgreSQL", "React 19", "TypeScript", "CLIP / PyTorch", "Playwright", "pytest"],
+        "github_url": f"{GITHUB}/ScrapLink",
+        "demo_url": None,
+        "featured": 1,
+    },
+    {
         "title": "Floodlit xG",
         "description": "Expected Goals (xG) analytics over 3,464 real matches — shot maps, xG race charts, and a fitted fallback model.",
         "long_description": (
@@ -29,7 +76,7 @@ PROJECTS = [
             "common colour-vision deficiency."
         ),
         "tech_stack": ["JavaScript", "Node.js", "Express 5", "HTML / CSS", "Logistic Regression", "StatsBomb Open Data"],
-        "github_url": f"{GITHUB}/football-analyzer",
+        "github_url": f"{GITHUB}/Floodlit-xG",
         "demo_url": "https://floodlit-xg.vercel.app",
         "featured": 1,
     },
@@ -78,16 +125,17 @@ PROJECTS = [
         "description": "This site — a React + TypeScript frontend backed by a FastAPI service instead of hardcoded content.",
         "long_description": (
             "The site you're reading. Rather than hardcoding content into components, projects, skills, and "
-            "experience are served by a FastAPI backend over SQLAlchemy and SQLite, so each section fetches and "
-            "renders its own data with proper loading and error states. The frontend is React 19 with TypeScript, "
+            "experience are served by a FastAPI backend over SQLAlchemy — SQLite locally, Postgres in "
+            "production — so each section fetches and renders its own data with proper loading and error states. The frontend is React 19 with TypeScript, "
             "built by Vite and styled with Tailwind, with Framer Motion driving scroll-triggered reveals and an "
             "animated neural-network canvas behind the page. The contact form posts to a validated Pydantic "
             "endpoint that surfaces field-level errors back into the form. Dark and light themes are resolved "
-            "before first paint to avoid a flash of the wrong theme."
+            "before first paint to avoid a flash of the wrong theme. Frontend and API deploy together "
+            "on Vercel from one origin, with the API running as a Python serverless function."
         ),
-        "tech_stack": ["TypeScript", "React 19", "Vite", "Tailwind CSS", "Framer Motion", "Python", "FastAPI", "SQLAlchemy"],
+        "tech_stack": ["TypeScript", "React 19", "Vite", "Tailwind CSS", "Framer Motion", "Python", "FastAPI", "SQLAlchemy", "PostgreSQL", "Vercel"],
         "github_url": f"{GITHUB}/Portfolio",
-        "demo_url": None,
+        "demo_url": "https://neelbapat.vercel.app",
         "featured": 1,
     },
     {
@@ -111,7 +159,7 @@ SKILLS = [
     # Languages
     {"name": "JavaScript", "category": "Languages", "level": 90},
     {"name": "TypeScript", "category": "Languages", "level": 82},
-    {"name": "Python", "category": "Languages", "level": 80},
+    {"name": "Python", "category": "Languages", "level": 85},
     {"name": "Kotlin", "category": "Languages", "level": 72},
     {"name": "HTML / CSS", "category": "Languages", "level": 88},
     {"name": "SQL", "category": "Languages", "level": 75},
@@ -122,22 +170,29 @@ SKILLS = [
     {"name": "Framer Motion", "category": "Frontend", "level": 76},
     {"name": "Canvas / SVG Charts", "category": "Frontend", "level": 78},
     {"name": "Vite", "category": "Frontend", "level": 80},
+    {"name": "Next.js", "category": "Frontend", "level": 70},
     {"name": "Android UI (XML / Material 3)", "category": "Frontend", "level": 70},
     # Backend
     {"name": "Node.js", "category": "Backend", "level": 88},
     {"name": "Express", "category": "Backend", "level": 85},
-    {"name": "FastAPI", "category": "Backend", "level": 78},
+    {"name": "FastAPI", "category": "Backend", "level": 84},
     {"name": "REST API Design", "category": "Backend", "level": 85},
-    {"name": "PostgreSQL", "category": "Backend", "level": 76},
-    {"name": "SQLite / SQLAlchemy", "category": "Backend", "level": 75},
+    {"name": "WebSockets", "category": "Backend", "level": 72},
+    {"name": "PostgreSQL / TimescaleDB", "category": "Backend", "level": 78},
+    {"name": "SQLAlchemy / Alembic", "category": "Backend", "level": 78},
+    {"name": "Redis Streams", "category": "Backend", "level": 68},
     {"name": "JWT / Auth Flows", "category": "Backend", "level": 76},
     {"name": "Room / Coroutines & Flow", "category": "Backend", "level": 70},
     # Tools
     {"name": "Git / GitHub", "category": "Tools", "level": 90},
     {"name": "npm / Node tooling", "category": "Tools", "level": 85},
+    {"name": "Docker / Compose", "category": "Tools", "level": 74},
     {"name": "Data Wrangling (JSON/TSV)", "category": "Tools", "level": 82},
+    {"name": "pandas / NumPy", "category": "Tools", "level": 72},
+    {"name": "scikit-learn / ML Modelling", "category": "Tools", "level": 68},
+    {"name": "pytest / Playwright", "category": "Tools", "level": 70},
     {"name": "ESLint / oxlint", "category": "Tools", "level": 78},
-    {"name": "Vercel", "category": "Tools", "level": 72},
+    {"name": "Vercel", "category": "Tools", "level": 76},
     {"name": "Android Studio / Gradle", "category": "Tools", "level": 68},
     {"name": "VS Code", "category": "Tools", "level": 92},
 ]
